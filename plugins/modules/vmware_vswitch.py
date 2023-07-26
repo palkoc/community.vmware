@@ -75,7 +75,7 @@ options:
       mac_changes:
         type: bool
         description: Indicates whether mac changes are allowed.
-    required: False
+    required: false
     aliases: [ 'security_policy', 'network_policy' ]
     type: dict
   teaming:
@@ -87,7 +87,7 @@ options:
         type: str
         description:
         - Network adapter teaming policy.
-        choices: [ loadbalance_ip, loadbalance_srcmac, loadbalance_srcid, failover_explicit, None ]
+        choices: [ loadbalance_ip, loadbalance_srcmac, loadbalance_srcid, failover_explicit ]
         aliases: [ 'load_balance_policy' ]
       network_failure_detection:
         type: str
@@ -111,7 +111,7 @@ options:
         - List of standby adapters used for failover.
         - All vmnics are used as active adapters if C(active_adapters) and C(standby_adapters) are not defined.
         elements: str
-    required: False
+    required: false
     aliases: [ 'teaming_policy' ]
     type: dict
   traffic_shaping:
@@ -131,7 +131,7 @@ options:
       burst_size:
         type: int
         description: Burst size (KB).
-    required: False
+    required: false
     type: dict
 extends_documentation_fragment:
 - community.vmware.vmware.documentation
@@ -191,7 +191,7 @@ EXAMPLES = r'''
     nic_name: vmnic0
     mtu: 9000
     security:
-        promiscuous_mode: True
+        promiscuous_mode: true
   delegate_to: localhost
 
 - name: Add a VMware vSwitch to a specific host system with active/standby teaming
@@ -222,7 +222,7 @@ EXAMPLES = r'''
       - vmnic0
       - vmnic1
     traffic_shaping:
-        enabled: True
+        enabled: true
         average_bandwidth: 100000
         peak_bandwidth: 100000
         burst_size: 102400
@@ -763,7 +763,6 @@ def main():
                 load_balancing=dict(
                     type='str',
                     choices=[
-                        None,
                         'loadbalance_ip',
                         'loadbalance_srcmac',
                         'loadbalance_srcid',

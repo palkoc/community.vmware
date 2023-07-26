@@ -245,7 +245,7 @@ Notes
 -----
 
 .. note::
-   - The ESXi login user must have the appropriate rights to administer permissions.
+   - The ESXi or vCenter login user must have the appropriate rights to administer permissions.
    - Supports check mode.
    - All modules requires API write access and hence is not supported on a free ESXi license.
 

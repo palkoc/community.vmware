@@ -90,7 +90,7 @@ options:
         description:
         - Force the given properties to be inserted into an OVF Environment and injected through VMware Tools.
         type: bool
-        default: False
+        default: false
     name:
         description:
         - Name of the VM to work with.
@@ -157,7 +157,7 @@ EXAMPLES = r'''
     datastore: vsandatastore
     name: NewVM
     networks: "{u'VM Network':u'{{ ProvisioningNetworkLabel }}'}"
-    power_on: no
+    power_on: false
     ovf: /absolute/path/to/template/mytemplate.ova
   delegate_to: localhost
 

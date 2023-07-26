@@ -110,6 +110,7 @@ options:
     - "The folder should include the datacenter. ESXi's datacenter is ha-datacenter."
     - This parameter is case sensitive.
     - 'If multiple machines are found with same name, this parameter is used to identify'
+    - 'uniqueness of the virtual machine. Added in Ansible 2.5.'
     - 'Examples:'
     - '   folder: /ha-datacenter/vm'
     - '   folder: ha-datacenter/vm'
@@ -241,6 +242,22 @@ options:
         iommu:
             type: bool
             description: Flag to specify if I/O MMU is enabled for this virtual machine.
+  encryption:
+    type: dict
+    default: {}
+    description:
+    - Manage virtual machine encryption settings
+    - All parameters case sensitive.
+    version_added: '3.9.0'
+    suboptions:
+        encrypted_vmotion:
+            type: str
+            description: Controlls encryption for live migrations with vmotion
+            choices: ['disabled', 'opportunistic', 'required']
+        encrypted_ft:
+            type: str
+            description: Controlls encryption for fault tolerance replication
+            choices: ['disabled', 'opportunistic', 'required']
   guest_id:
     type: str
     description:
@@ -477,7 +494,7 @@ options:
   delete_from_inventory:
     description:
     - Whether to delete Virtual machine from inventory or delete from disk.
-    default: False
+    default: false
     type: bool
   datacenter:
     description:
@@ -621,7 +638,7 @@ options:
         existing_vm:
             type: bool
             description:
-            - If set to C(True), do OS customization on the specified virtual machine directly.
+            - If set to C(true), do OS customization on the specified virtual machine directly.
             - Common for Linux and Windows customization.
         dns_servers:
             type: list
@@ -678,7 +695,7 @@ options:
             description:
             - Number of autologon after reboot.
             - Specific to Windows customization.
-            - Ignored if C(autologon) is unset or set to C(False).
+            - Ignored if C(autologon) is unset or set to C(false).
             - If unset, 1 will be used.
         domainadmin:
             type: str
@@ -836,7 +853,7 @@ EXAMPLES = r'''
       num_cpus: 6
       num_cpu_cores_per_socket: 3
       scsi: paravirtual
-      memory_reservation_lock: True
+      memory_reservation_lock: true
       mem_limit: 8096
       mem_reservation: 4096
       cpu_shares_level: "high"
@@ -844,9 +861,9 @@ EXAMPLES = r'''
       cpu_limit: 8096
       cpu_reservation: 4096
       max_connections: 5
-      hotadd_cpu: True
-      hotremove_cpu: True
-      hotadd_memory: False
+      hotadd_cpu: true
+      hotremove_cpu: true
+      hotadd_memory: false
       version: 12 # Hardware version of virtual machine
       boot_firmware: "efi"
     cdrom:
@@ -909,7 +926,7 @@ EXAMPLES = r'''
       - name: VM Network
         ip: 192.168.10.11
         netmask: 255.255.255.0
-    wait_for_ip_address: True
+    wait_for_ip_address: true
     customization:
       domain: "{{ guest_domain }}"
       dns_servers:
@@ -948,7 +965,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     name: vm_name
-    delete_from_inventory: True
+    delete_from_inventory: true
     state: absent
   delegate_to: localhost
 
@@ -1708,6 +1725,26 @@ class PyVmomiHelper(PyVmomi):
                     self.configspec.flags = vim.vm.FlagInfo()
                 self.configspec.flags.vbsEnabled = virt_based_security
 
+    def configure_encryption_params(self, vm_obj):
+
+        encrypted_vmotion = self.params['encryption']['encrypted_vmotion']
+        if encrypted_vmotion is not None:
+            if vm_obj is None or encrypted_vmotion != vm_obj.config.migrateEncryption:
+                self.change_detected = True
+                self.configspec.migrateEncryption = encrypted_vmotion
+
+        encrypted_ft = self.params['encryption']['encrypted_ft']
+        if encrypted_ft is not None:
+            if encrypted_ft == "disabled":
+                encrypted_ft_cfg = "ftEncryptionDisabled"
+            elif encrypted_ft == "opportunistic":
+                encrypted_ft_cfg = "ftEncryptionOpportunistic"
+            elif encrypted_ft == "required":
+                encrypted_ft_cfg = "ftEncryptionRequired"
+            if vm_obj is None or encrypted_ft_cfg != vm_obj.config.ftEncryptionMode:
+                self.change_detected = True
+                self.configspec.ftEncryptionMode = encrypted_ft_cfg
+
     def get_device_by_type(self, vm=None, type=None):
         device_list = []
         if vm is None or type is None:
@@ -1787,12 +1824,16 @@ class PyVmomiHelper(PyVmomi):
             # New VM or existing VM without label specified, add new NVDIMM device
             if vm_obj is None or (vm_obj and not vm_obj.config.template and self.params['nvdimm']['label'] is None):
                 if self.params['nvdimm']['state'] == 'present':
-                    # Get host default PMem storage policy
-                    storage_profile_name = "Host-local PMem Default Storage Policy"
-                    spbm = SPBM(self.module)
-                    pmem_profile = spbm.find_storage_profile_by_name(profile_name=storage_profile_name)
-                    if pmem_profile is None:
-                        self.module.fail_json(msg="Can not find PMem storage policy with name '%s'." % storage_profile_name)
+                    vc_pmem_profile_id = None
+                    # Get default PMem storage policy when host is vCenter
+                    if self.is_vcenter():
+                        storage_profile_name = "Host-local PMem Default Storage Policy"
+                        spbm = SPBM(self.module)
+                        pmem_profile = spbm.find_storage_profile_by_name(profile_name=storage_profile_name)
+                        if pmem_profile is None:
+                            self.module.fail_json(msg="Can not find PMem storage policy with name '%s'." % storage_profile_name)
+                        vc_pmem_profile_id = pmem_profile.profileId.uniqueId
+
                     if not nvdimm_ctl_exists:
                         nvdimm_ctl_spec = self.device_helper.create_nvdimm_controller()
                         self.configspec.deviceChange.append(nvdimm_ctl_spec)
@@ -1800,7 +1841,7 @@ class PyVmomiHelper(PyVmomi):
 
                     nvdimm_dev_spec = self.device_helper.create_nvdimm_device(
                         nvdimm_ctl_dev_key=nvdimm_ctl_key,
-                        pmem_profile_id=pmem_profile.profileId.uniqueId,
+                        pmem_profile_id=vc_pmem_profile_id,
                         nvdimm_dev_size_mb=self.params['nvdimm']['size_mb']
                     )
                     self.change_detected = True
@@ -2734,13 +2775,13 @@ class PyVmomiHelper(PyVmomi):
 
                     for host in cluster.host:
                         for mi in host.configManager.storageSystem.fileSystemVolumeInfo.mountInfo:
-                            if mi.volume.type == "VMFS":
+                            if mi.volume.type == "VMFS" or mi.volume.type == "NFS":
                                 datastores.append(self.cache.find_obj(self.content, [vim.Datastore], mi.volume.name))
                 elif self.params['esxi_hostname']:
                     host = self.find_hostsystem_by_name(self.params['esxi_hostname'])
 
                     for mi in host.configManager.storageSystem.fileSystemVolumeInfo.mountInfo:
-                        if mi.volume.type == "VMFS":
+                        if mi.volume.type == "VMFS" or mi.volume.type == "NFS":
                             datastores.append(self.cache.find_obj(self.content, [vim.Datastore], mi.volume.name))
                 else:
                     datastores = self.cache.get_all_objs(self.content, [vim.Datastore])
@@ -2976,6 +3017,7 @@ class PyVmomiHelper(PyVmomi):
         self.configure_guestid(vm_obj=vm_obj, vm_creation=True)
         self.configure_cpu_and_memory(vm_obj=vm_obj, vm_creation=True)
         self.configure_hardware_params(vm_obj=vm_obj)
+        self.configure_encryption_params(vm_obj=vm_obj)
         self.configure_resource_alloc_info(vm_obj=vm_obj)
         self.configure_vapp_properties(vm_obj=vm_obj)
         self.configure_disks(vm_obj=vm_obj)
@@ -3120,7 +3162,10 @@ class PyVmomiHelper(PyVmomi):
                 task = vm.ReconfigVM_Task(vm_custom_spec)
                 self.wait_for_task(task)
                 if task.info.state == 'error':
-                    return {'changed': self.change_applied, 'failed': True, 'msg': task.info.error.msg, 'op': 'customvalues'}
+                    return {'changed': self.change_applied, 'failed': True, 'msg': task.info.error.msg, 'op': 'advanced_settings'}
+
+            if self.params['customvalues']:
+                self.customize_customvalues(vm_obj=vm)
 
             if self.params['wait_for_ip_address'] or self.params['wait_for_customization'] or self.params['state'] in ['poweredon', 'powered-on', 'restarted']:
                 set_vm_power_state(self.content, vm, 'poweredon', force=False)
@@ -3157,6 +3202,7 @@ class PyVmomiHelper(PyVmomi):
         self.configure_guestid(vm_obj=self.current_vm_obj)
         self.configure_cpu_and_memory(vm_obj=self.current_vm_obj)
         self.configure_hardware_params(vm_obj=self.current_vm_obj)
+        self.configure_encryption_params(vm_obj=self.current_vm_obj)
         self.configure_disks(vm_obj=self.current_vm_obj)
         self.configure_network(vm_obj=self.current_vm_obj)
         self.configure_cdrom(vm_obj=self.current_vm_obj)
@@ -3440,6 +3486,13 @@ def main():
                 version=dict(type='str'),
                 virt_based_security=dict(type='bool'),
                 iommu=dict(type='bool')
+            )),
+        encryption=dict(
+            type='dict',
+            default={},
+            options=dict(
+                encrypted_vmotion=dict(type='str', choices=['disabled', 'opportunistic', 'required']),
+                encrypted_ft=dict(type='str', choices=['disabled', 'opportunistic', 'required'])
             )),
         force=dict(type='bool', default=False),
         datacenter=dict(type='str', default='ha-datacenter'),

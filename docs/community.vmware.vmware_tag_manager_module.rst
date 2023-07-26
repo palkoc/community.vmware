@@ -281,7 +281,7 @@ Parameters
                 </td>
                 <td>
                         <div>Allows connection when SSL certificates are not valid.</div>
-                        <div>Set to <code>False</code> when certificates are not trusted.</div>
+                        <div>Set to <code>false</code> when certificates are not trusted.</div>
                         <div>If the value is not specified in the task, the value of environment variable <code>VMWARE_VALIDATE_CERTS</code> will be used instead.</div>
                 </td>
             </tr>
@@ -412,7 +412,7 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
                             <div>metadata about tags related to object configuration</div>
                     <br/>
                         <div style="font-size: smaller"><b>Sample:</b></div>
-                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{&#x27;current_tags&#x27;: [&#x27;backup&#x27;, &#x27;security&#x27;], &#x27;desired_tags&#x27;: [&#x27;security&#x27;], &#x27;previous_tags&#x27;: [&#x27;backup&#x27;, &#x27;security&#x27;]}</div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{&#x27;attached_tags&#x27;: [&#x27;urn:vmomi:InventoryServiceCategory:76f69e84-f6b9-4e64-954c-fac545d2c0ba:GLOBAL:security&#x27;], &#x27;current_tags&#x27;: [&#x27;urn:vmomi:InventoryServiceCategory:927f5ff8-62e6-4364-bc94-23e3bfd7dee7:GLOBAL:backup&#x27;, &#x27;urn:vmomi:InventoryServiceCategory:76f69e84-f6b9-4e64-954c-fac545d2c0ba:GLOBAL:security&#x27;], &#x27;detached_tags&#x27;: [], &#x27;previous_tags&#x27;: [&#x27;urn:vmomi:InventoryServiceCategory:927f5ff8-62e6-4364-bc94-23e3bfd7dee7:GLOBAL:backup&#x27;]}</div>
                 </td>
             </tr>
     </table>

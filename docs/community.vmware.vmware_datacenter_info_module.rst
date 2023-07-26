@@ -196,7 +196,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>Tags related to Datacenter are shown if set to <code>True</code>.</div>
+                        <div>Tags related to Datacenter are shown if set to <code>true</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -277,7 +277,7 @@ Examples
         username: '{{ vcenter_username }}'
         password: '{{ vcenter_password }}'
         datacenter: '{{ datacenter_name }}'
-        show_tag: True
+        show_tag: true
       delegate_to: localhost
 
     - name: Gather vSphere schema information

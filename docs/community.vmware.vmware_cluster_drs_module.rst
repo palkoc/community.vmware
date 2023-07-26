@@ -122,7 +122,7 @@ Parameters
                 </td>
                 <td>
                         <div>Whether DRS Behavior overrides for individual virtual machines are enabled.</div>
-                        <div>If set to <code>True</code>, overrides <code>drs_default_vm_behavior</code>.</div>
+                        <div>If set to <code>true</code>, overrides <code>drs_default_vm_behavior</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -358,7 +358,7 @@ Examples
         password: "{{ vcenter_password }}"
         datacenter_name: DC0
         cluster_name: "{{ cluster_name }}"
-        enable: True
+        enable: true
         drs_default_vm_behavior: partiallyAutomated
       delegate_to: localhost
 

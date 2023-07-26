@@ -1514,3 +1514,105 @@ releases:
     - 1637-pylint-issues.yml
     - 1641_extend_result_docs_guest_disk
     release_date: '2023-02-25'
+  3.5.0:
+    changes:
+      bugfixes:
+      - vmware_cross_vc_clone - Fix SSL Thumbprint validation to ignore if destination_vcenter_validate_certs
+        is false (https://github.com/ansible-collections/community.vmware/issues/1433).
+      - vmware_guest - Fixes adding new NVDIMM device issue by connecting to ESXi
+        host (https://github.com/ansible-collections/community.vmware/issues/1644).
+      - vmware_guest_cross_vc_clone - Fix vim.fault.NotAuthenticated issue (https://github.com/ansible-collections/community.vmware/issues/1223).
+      - vmware_guest_cross_vc_clone - New parameter timeout in order to allow clone
+        running longer than 1 hour
+      - vmware_tag - Fix a performance issue during tag processing (https://github.com/ansible-collections/community.vmware/issues/1603).
+      major_changes:
+      - Use true/false (lowercase) for boolean values in documentation and examples
+        (https://github.com/ansible-collections/community.vmware/issues/1660).
+      minor_changes:
+      - vmware_migrate_vmk - Improve error handling (https://github.com/ansible-collections/community.vmware/issues/1118).
+      - vmware_tag - Allow to use category names for tag management (https://github.com/ansible-collections/community.vmware/issues/1614).
+      - vmware_tag_manager - Improve performance of tag attachments and detachments
+        (https://github.com/ansible-collections/community.vmware/issues/1603).
+      - vmware_tools - ansible_vmware_guest_uuid added for easier use of vmware_tools
+        connection plugin with vmware_vm_inventory plugin
+      - vmware_vm_info - Add several parameters to skip discovering some information
+        (https://github.com/ansible-collections/community.vmware/issues/1682)
+    fragments:
+    - 1118-vmware_migrate_vmk.yml
+    - 1223-cross_vc_clone_timeout.yml
+    - 1603-fix_tagging_performance_issue.yml
+    - 1614-allow_to_use_category_names_for_tag_management.yml
+    - 1647-uuid_vmware_tools_connections.yml
+    - 1653-cross_vc_clone_ssl_thumbprint.yml
+    - 1657-vmware_guest.yml
+    - 1660_truthy.yml
+    - 1682_vmware_vm_info
+    modules:
+    - description: Manages the vSAN Hardware Compatibility List (HCL) database
+      name: vmware_vsan_hcl_db
+      namespace: ''
+    release_date: '2023-03-26'
+  3.6.0:
+    changes:
+      bugfixes:
+      - vmware_guest - Fixed issue where custom attributes were not getting set on
+        VM creation (https://github.com/ansible-collections/community.vmware/pull/1713)
+      - vmware_vsan_health_info - Fix return value (https://github.com/ansible-collections/community.vmware/pull/1706).
+    fragments:
+    - 1706-vmware_vsan_health_info.yml
+    - 1713-vmware_guest-custom_attributes_on_create.yaml
+    modules:
+    - description: Silence vSAN health checks
+      name: vsan_health_silent_checks
+      namespace: ''
+    release_date: '2023-05-12'
+  3.7.0:
+    changes:
+      bugfixes:
+      - Add missing modules to runtime.yml (https://github.com/ansible-collections/community.vmware/pull/1764).
+      - vmware_vm_info - Add missing show_folder parameter (https://github.com/ansible-collections/community.vmware/issues/1709).
+      minor_changes:
+      - vmware_cluster_drs_recommendations - Add the Module to apply the drs recommendations
+        (https://github.com/ansible-collections/community.vmware/pull/1736)
+      - vmware_guest_serial_port - add support for proxyURI parameter to enable use
+        of a virtual serial port concentrator (https://github.com/ansible-collections/community.vmware/issues/1742)
+    fragments:
+    - 1710_vmware_vm_info.yaml
+    - 1736-vmware_cluster_drs_recommendations.yaml
+    - 1742-vmware_guest_serial_port-vspc.yml
+    - 1764_runtime.yaml
+    modules:
+    - description: Apply DRS Recommendations
+      name: vmware_cluster_drs_recommendations
+      namespace: ''
+    - description: Uploads the vSAN Release Catalog
+      name: vmware_vsan_release_catalog
+      namespace: ''
+    release_date: '2023-06-09'
+  3.8.0:
+    changes:
+      bugfixes:
+      - vmware_deploy_ovf - Fix an issue with networks that are available on more
+        than one cluster (https://github.com/ansible-collections/community.vmware/issues/1590).
+      - vmware_guest_disk - Fix idempotency for `absent` disks (https://github.com/ansible-collections/community.vmware/issues/1765).
+      major_changes:
+      - vmware_vasa - added a new module to register/unregister a VASA provider
+      - vmware_vasa_info - added a new module to gather the information about existing
+        VASA provider(s)
+      minor_changes:
+      - autoselect_datastore - add support to also look at NFS mounted filesystems
+        (previously was just VMFS)
+    fragments:
+    - 1590_vmware_deploy_ovf.yaml
+    - 1751-autoselect_datastore-also-use-NFS-mounts.yml
+    - 1765_vmware_guest_disk.yaml
+    - 1774_vmware_vasa.yaml
+    - 1774_vmware_vasa_info.yaml
+    modules:
+    - description: Manage VMware Virtual Volumes storage provider
+      name: vmware_vasa
+      namespace: ''
+    - description: Gather information about vSphere VASA providers.
+      name: vmware_vasa_info
+      namespace: ''
+    release_date: '2023-07-16'

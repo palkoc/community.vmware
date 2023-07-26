@@ -49,7 +49,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, then the host should be connected as soon as it is added.</div>
+                        <div>If set to <code>true</code>, then the host should be connected as soon as it is added.</div>
                         <div>This parameter is ignored if state is set to a value other than <code>present</code>.</div>
                 </td>
             </tr>
@@ -444,7 +444,7 @@ Examples
         esxi_username: '{{ esxi_username }}'
         esxi_password: '{{ esxi_password }}'
         state: present
-        add_connected: True
+        add_connected: true
       delegate_to: localhost
 
     - name: Reconnect ESXi Host (with username/password set)

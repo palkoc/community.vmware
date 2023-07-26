@@ -27,12 +27,12 @@ options:
     description:
     - Name of the datacenter.
     type: str
-    required: True
+    required: true
   datastore_cluster:
     description:
     - Name of the datastore cluster.
     type: str
-    required: True
+    required: true
 extends_documentation_fragment:
 - community.vmware.vmware.documentation
 """
@@ -44,7 +44,7 @@ EXAMPLES = r"""
     hostname: '{{ vcenter_hostname }}'
     username: '{{ vcenter_username }}'
     password: '{{ vcenter_password }}'
-    validate_certs: no
+    validate_certs: false
     datastore_cluster: '{{ datastore_cluster_name }}'
     datacenter: '{{ datacenter }}'
   register: recommended_ds

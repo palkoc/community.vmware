@@ -5,7 +5,7 @@
 community.vmware.vmware_local_role_info
 ***************************************
 
-**Gather info about local roles on an ESXi host**
+**Gather info about local roles on an ESXi host or vCenter**
 
 
 
@@ -16,7 +16,7 @@ community.vmware.vmware_local_role_info
 
 Synopsis
 --------
-- This module can be used to gather information about local role info on an ESXi host
+- This module can be used to gather information about local role info on an ESXi host or vCenter
 
 
 
@@ -167,7 +167,7 @@ Notes
 -----
 
 .. note::
-   - Be sure that the ESXi user used for login, has the appropriate rights to view roles
+   - Be sure that the user used for login, has the appropriate rights to view roles
    - The module returns a list of dict in version 2.8 and above.
    - All modules requires API write access and hence is not supported on a free ESXi license.
 
@@ -178,7 +178,7 @@ Examples
 
 .. code-block:: yaml
 
-    - name: Gather info about local role from an ESXi
+    - name: Gather info about local role from an ESXi (or vCenter)
       community.vmware.vmware_local_role_info:
         hostname: '{{ esxi_hostname }}'
         username: '{{ esxi_username }}'

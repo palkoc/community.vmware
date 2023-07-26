@@ -62,12 +62,12 @@ options:
     default: false
   guest_id:
     description:
-    - The guest OS ID from the returned list when C(get_guest_os_ids) is set to C(True), e.g., 'rhel8_64Guest'.
-    - This parameter must be set when C(get_config_options) is set to C(True).
+    - The guest OS ID from the returned list when C(get_guest_os_ids) is set to C(true), e.g., 'rhel8_64Guest'.
+    - This parameter must be set when C(get_config_options) is set to C(true).
     type: str
   hardware_version:
     description:
-    - The hardware version from the returned list when C(get_hardware_versions) is set to C(True), e.g., 'vmx-19'.
+    - The hardware version from the returned list when C(get_hardware_versions) is set to C(true), e.g., 'vmx-19'.
     type: str
 extends_documentation_fragment:
 - community.vmware.vmware.documentation
@@ -81,7 +81,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     esxi_hostname: "{{ esxi_hostname }}"
-    get_guest_os_ids: True
+    get_guest_os_ids: true
   delegate_to: localhost
 
 - name: Get VM recommended config option for Windows 10 guest OS on given ESXi host
@@ -90,7 +90,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     esxi_hostname: "{{ esxi_hostname }}"
-    get_config_options: True
+    get_config_options: true
     guest_id: "windows9_64Guest"
   delegate_to: localhost
 '''

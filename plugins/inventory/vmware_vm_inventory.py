@@ -24,7 +24,7 @@ DOCUMENTATION = r'''
     options:
         hostname:
             description: Name of vCenter or ESXi server.
-            required: True
+            required: true
             env:
               - name: VMWARE_HOST
               - name: VMWARE_SERVER
@@ -32,7 +32,7 @@ DOCUMENTATION = r'''
             description:
             - Name of vSphere user.
             - Accepts vault encrypted variable.
-            required: True
+            required: true
             env:
               - name: VMWARE_USER
               - name: VMWARE_USERNAME
@@ -40,7 +40,7 @@ DOCUMENTATION = r'''
             description:
             - Password of vSphere user.
             - Accepts vault encrypted variable.
-            required: True
+            required: true
             env:
               - name: VMWARE_PASSWORD
         port:
@@ -53,7 +53,7 @@ DOCUMENTATION = r'''
             description:
             - Allows connection when SSL certificates are not valid.
             - Set to C(false) when certificates are not trusted.
-            default: True
+            default: true
             type: bool
             env:
               - name: VMWARE_VALIDATE_CERTS
@@ -63,7 +63,7 @@ DOCUMENTATION = r'''
             - Requires 'vSphere Automation SDK' library to be installed on the given controller machine.
             - Please refer following URLs for installation steps
             - U(https://code.vmware.com/web/sdk/7.0/vsphere-automation-python)
-            default: False
+            default: false
             type: bool
         hostnames:
             description:
@@ -86,7 +86,7 @@ DOCUMENTATION = r'''
             - Use C(all) to populate all the properties of the virtual machine.
               The value C(all) is time consuming operation, do not use unless required absolutely.
             - Please refer more VMware guest attributes which can be used as properties
-              U(https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/scenario_guides/vmware_scenarios/vmware_inventory_vm_attributes.rst)
+              U(https://docs.ansible.com/ansible/latest/collections/community/vmware/docsite/vmware_scenarios/vmware_inventory_vm_attributes.html)
             type: list
             elements: string
             default: [ 'name', 'config.cpuHotAddEnabled', 'config.cpuHotRemoveEnabled',
@@ -98,9 +98,9 @@ DOCUMENTATION = r'''
         with_nested_properties:
             description:
             - This option transform flatten properties name to nested dictionary.
-            - From 1.10.0 and onwards, default value is set to C(True).
+            - From 1.10.0 and onwards, default value is set to C(true).
             type: bool
-            default: True
+            default: true
         keyed_groups:
             description:
             - Add hosts to group based on the values of a variable.
@@ -122,7 +122,7 @@ DOCUMENTATION = r'''
             - Each resource item is represented by exactly one C('vim_type_snake_case):C(list of resource names) pair and optional nested I(resources)
             - Key name is based on snake case of a vim type name; e.g C(host_system) correspond to C(vim.HostSystem)
             - See  L(VIM Types,https://pubs.vmware.com/vi-sdk/visdk250/ReferenceGuide/index-mo_types.html)
-            required: False
+            required: false
             type: list
             elements: dict
             default: []
@@ -130,28 +130,28 @@ DOCUMENTATION = r'''
             description:
             - Include virtual machines path.
             - Set this option to a string value to replace root name from I('Datacenters').
-            default: False
+            default: false
             type: bool
         with_sanitized_property_name:
             description:
                 - This option allows property name sanitization to create safe property names for use in Ansible.
                 - Also, transforms property name to snake case.
             type: bool
-            default: False
+            default: false
         proxy_host:
           description:
           - Address of a proxy that will receive all HTTPS requests and relay them.
           - The format is a hostname or a IP.
           - This feature depends on a version of pyvmomi>=v6.7.1.2018.12.
           type: str
-          required: False
+          required: false
           env:
             - name: VMWARE_PROXY_HOST
         proxy_port:
           description:
           - Port of the HTTP proxy that will receive all HTTPS requests and relay them.
           type: int
-          required: False
+          required: false
           env:
             - name: VMWARE_PROXY_PORT
 '''
@@ -159,20 +159,20 @@ DOCUMENTATION = r'''
 EXAMPLES = r'''
 # Sample configuration file for VMware Guest dynamic inventory
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
-    with_tags: True
+    validate_certs: false
+    with_tags: true
 
 # Gather minimum set of properties for VMware guest
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     properties:
     - 'name'
     - 'guest.ipAddress'
@@ -181,11 +181,11 @@ EXAMPLES = r'''
 
 # Create Groups based upon VMware Tools status
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     properties:
     - 'name'
     - 'config.name'
@@ -201,11 +201,11 @@ EXAMPLES = r'''
 
 # Filter VMs based upon condition
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     properties:
     - 'runtime.powerState'
     - 'config.name'
@@ -216,11 +216,11 @@ EXAMPLES = r'''
 
 # Filter VM's based on OR conditions
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     properties:
     - 'name'
     - 'config.name'
@@ -236,11 +236,11 @@ EXAMPLES = r'''
 
 # Filter VM's based on regex conditions
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     properties:
     - 'config.name'
     - 'config.guestId'
@@ -251,11 +251,11 @@ EXAMPLES = r'''
 
 # Using compose and groups
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     properties:
     - 'name'
     - 'config.name'
@@ -269,18 +269,18 @@ EXAMPLES = r'''
       ansible_user: "'admin'"
       ansible_connection: "'ssh'"
     groups:
-      VMs: True
+      VMs: true
     hostnames:
     - config.name
 
 # Use Datacenter, Cluster and Folder value to list VMs
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.200.241
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
-    with_tags: True
+    validate_certs: false
+    with_tags: true
     resources:
       - datacenter:
         - Asia-Datacenter1
@@ -297,11 +297,11 @@ EXAMPLES = r'''
 
 # Use Category and it's relation with Tag
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.201.128
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     hostnames:
     - 'config.name'
     properties:
@@ -309,22 +309,22 @@ EXAMPLES = r'''
     - 'config.guestId'
     - 'guest.ipAddress'
     - 'summary.runtime.powerState'
-    with_tags: True
+    with_tags: true
     keyed_groups:
     - key: tag_category.OS
       prefix: "vmware_tag_os_category_"
       separator: ""
-    with_nested_properties: True
+    with_nested_properties: true
     filters:
     - "tag_category.OS is defined and 'Linux' in tag_category.OS"
 
 # customizing hostnames based on VM's FQDN. The second hostnames template acts as a fallback mechanism.
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     hostnames:
      - 'config.name+"."+guest.ipStack.0.dnsConfig.domainName'
      - 'config.name'
@@ -338,11 +338,11 @@ EXAMPLES = r'''
 
 # Select a specific IP address for use by ansible when multiple NICs are present on the VM
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.223.31
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     compose:
       # Set the IP address used by ansible to one that starts by 10.42. or 10.43.
       ansible_host: >-
@@ -358,11 +358,11 @@ EXAMPLES = r'''
 
 # Group hosts using Jinja2 conditionals
     plugin: community.vmware.vmware_vm_inventory
-    strict: False
+    strict: false
     hostname: 10.65.13.37
     username: administrator@vsphere.local
     password: Esxi@123$%
-    validate_certs: False
+    validate_certs: false
     hostnames:
     - config.name
     properties:

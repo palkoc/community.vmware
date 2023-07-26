@@ -385,7 +385,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, module will wait for process to complete in the given virtual machine.</div>
+                        <div>If set to <code>true</code>, module will wait for process to complete in the given virtual machine.</div>
                 </td>
             </tr>
     </table>
@@ -437,7 +437,7 @@ Examples
         vm_password: superSecret
         vm_shell: /bin/sleep
         vm_shell_args: 100
-        wait_for_process: True
+        wait_for_process: true
         timeout: 2000
       delegate_to: localhost
       register: shell_command_with_wait_timeout

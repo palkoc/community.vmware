@@ -205,7 +205,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>Tags related to Host are shown if set to <code>True</code>.</div>
+                        <div>Tags related to Host are shown if set to <code>true</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -288,7 +288,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         esxi_hostname: "{{ esxi_hostname }}"
-        show_tag: True
+        show_tag: true
       register: host_facts_tag
       delegate_to: localhost
 

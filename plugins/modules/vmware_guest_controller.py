@@ -108,7 +108,7 @@ options:
        bus_sharing:
          description:
          - Bus sharing type for SCSI controller.
-         required: False
+         required: false
          type: str
          choices: ['noSharing', 'physicalSharing', 'virtualSharing' ]
          default: 'noSharing'
@@ -117,9 +117,9 @@ options:
    gather_disk_controller_facts:
      description:
      - Whether to collect existing disk and USB controllers facts only.
-     - When this parameter is set to C(True), C(controllers) parameter will be ignored.
+     - When this parameter is set to C(true), C(controllers) parameter will be ignored.
      type: bool
-     default: False
+     default: false
    sleep_time:
      description:
      - 'The sleep time in seconds after VM reconfigure task completes, used when not get the updated VM controller

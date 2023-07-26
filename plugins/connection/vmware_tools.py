@@ -27,7 +27,7 @@ DOCUMENTATION = r'''
         vars:
           - name: ansible_host
           - name: ansible_vmware_host
-        required: True
+        required: true
       vmware_user:
         description:
           - Username for the connection.
@@ -40,7 +40,7 @@ DOCUMENTATION = r'''
           - name: VMWARE_USER
         vars:
           - name: ansible_vmware_user
-        required: True
+        required: true
       vmware_password:
         description:
           - Password for the connection.
@@ -49,7 +49,7 @@ DOCUMENTATION = r'''
           - name: VMWARE_PASSWORD
         vars:
           - name: ansible_vmware_password
-        required: True
+        required: true
       vmware_port:
         description:
           - Port for the connection.
@@ -59,7 +59,7 @@ DOCUMENTATION = r'''
         vars:
           - name: ansible_port
           - name: ansible_vmware_port
-        required: False
+        required: false
         default: 443
       validate_certs:
         description:
@@ -69,10 +69,11 @@ DOCUMENTATION = r'''
           - name: VMWARE_VALIDATE_CERTS
         vars:
           - name: ansible_vmware_validate_certs
-        default: True
+        default: true
         type: bool
       vm_path:
         description:
+          - Mutually exclusive with vm_uuid
           - VM path absolute to the connection.
           - "vCenter Example: C(Datacenter/vm/Discovered virtual machine/testVM)."
           - "ESXi Host Example: C(ha-datacenter/vm/testVM)."
@@ -82,7 +83,15 @@ DOCUMENTATION = r'''
           - Folder I(vm) is not visible in the vSphere Web Client but necessary for VMware API to work.
         vars:
           - name: ansible_vmware_guest_path
-        required: True
+        required: false
+      vm_uuid:
+        description:
+          - Mutually exclusive with vm_path
+          - VM UUID to the connection.
+          - UUID of the virtual machine from property config.uuid of vmware_vm_inventory plugin
+        vars:
+          - name: ansible_vmware_guest_uuid
+        required: false
       vm_user:
         description:
           - VM username.
@@ -91,14 +100,14 @@ DOCUMENTATION = r'''
         vars:
           - name: ansible_user
           - name: ansible_vmware_tools_user
-        required: True
+        required: true
       vm_password:
         description:
           - Password for the user in guest operating system.
         vars:
           - name: ansible_password
           - name: ansible_vmware_tools_password
-        required: True
+        required: true
       exec_command_sleep_interval:
         description:
           - Time in seconds to sleep between execution of command.
@@ -308,10 +317,15 @@ class Connection(ConnectionBase):
 
     def _establish_vm(self, check_vm_credentials=True):
         searchIndex = self._si.content.searchIndex
-        self.vm = searchIndex.FindByInventoryPath(self.get_option("vm_path"))
-
-        if self.vm is None:
-            raise AnsibleError("Unable to find VM by path '%s'" % to_native(self.get_option("vm_path")))
+        self.vm = None
+        if self.get_option("vm_path") is not None:
+            self.vm = searchIndex.FindByInventoryPath(self.get_option("vm_path"))
+            if self.vm is None:
+                raise AnsibleError("Unable to find VM by path '%s'" % to_native(self.get_option("vm_path")))
+        elif self.get_option("vm_uuid") is not None:
+            self.vm = searchIndex.FindByUuid(None, self.get_option("vm_uuid"), True)
+            if self.vm is None:
+                raise AnsibleError("Unable to find VM by uuid '%s'" % to_native(self.get_option("vm_uuid")))
 
         self.vm_auth = vim.NamePasswordAuthentication(
             username=self.get_option("vm_user"), password=self.get_option("vm_password"), interactiveSession=False

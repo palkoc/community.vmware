@@ -288,7 +288,7 @@ Parameters
                 <td>
                         <div>Number of autologon after reboot.</div>
                         <div>Specific to Windows customization.</div>
-                        <div>Ignored if <code>autologon</code> is unset or set to <code>False</code>.</div>
+                        <div>Ignored if <code>autologon</code> is unset or set to <code>false</code>.</div>
                         <div>If unset, 1 will be used.</div>
                 </td>
             </tr>
@@ -399,7 +399,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, do OS customization on the specified virtual machine directly.</div>
+                        <div>If set to <code>true</code>, do OS customization on the specified virtual machine directly.</div>
                         <div>Common for Linux and Windows customization.</div>
                 </td>
             </tr>
@@ -1012,6 +1012,7 @@ Parameters
                         <div>The folder should include the datacenter. ESXi&#x27;s datacenter is ha-datacenter.</div>
                         <div>This parameter is case sensitive.</div>
                         <div>If multiple machines are found with same name, this parameter is used to identify</div>
+                        <div>uniqueness of the virtual machine. Added in Ansible 2.5.</div>
                         <div>Examples:</div>
                         <div>folder: /ha-datacenter/vm</div>
                         <div>folder: ha-datacenter/vm</div>
@@ -2484,7 +2485,7 @@ Examples
           num_cpus: 6
           num_cpu_cores_per_socket: 3
           scsi: paravirtual
-          memory_reservation_lock: True
+          memory_reservation_lock: true
           mem_limit: 8096
           mem_reservation: 4096
           cpu_shares_level: "high"
@@ -2492,9 +2493,9 @@ Examples
           cpu_limit: 8096
           cpu_reservation: 4096
           max_connections: 5
-          hotadd_cpu: True
-          hotremove_cpu: True
-          hotadd_memory: False
+          hotadd_cpu: true
+          hotremove_cpu: true
+          hotadd_memory: false
           version: 12 # Hardware version of virtual machine
           boot_firmware: "efi"
         cdrom:
@@ -2557,7 +2558,7 @@ Examples
           - name: VM Network
             ip: 192.168.10.11
             netmask: 255.255.255.0
-        wait_for_ip_address: True
+        wait_for_ip_address: true
         customization:
           domain: "{{ guest_domain }}"
           dns_servers:
@@ -2596,7 +2597,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         name: vm_name
-        delete_from_inventory: True
+        delete_from_inventory: true
         state: absent
       delegate_to: localhost
 

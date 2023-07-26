@@ -570,7 +570,7 @@ Examples
         directory:
           path: "/test"
           operation: create
-          recurse: no
+          recurse: false
       delegate_to: localhost
 
     - name: copy file to vm
@@ -585,7 +585,7 @@ Examples
         copy:
             src: "files/test.zip"
             dest: "/root/test.zip"
-            overwrite: False
+            overwrite: false
       delegate_to: localhost
 
     - name: fetch file from vm
@@ -615,7 +615,7 @@ Examples
         copy:
             src: "files/test.zip"
             dest: "/root/test.zip"
-            overwrite: False
+            overwrite: false
       delegate_to: localhost
 
 

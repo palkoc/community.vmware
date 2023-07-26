@@ -48,7 +48,7 @@ options:
     portgroup_name:
       description:
       - The name of the port group for the VMKernel interface.
-      required: True
+      required: true
       aliases: ['portgroup']
       type: str
     network:
@@ -101,44 +101,44 @@ options:
       - Enable VSAN traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       type: bool
-      default: False
+      default: false
     enable_vmotion:
       description:
       - Enable vMotion traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       - You cannot enable vMotion on an additional adapter if you already have an adapter with the vMotion TCP/IP stack configured.
       type: bool
-      default: False
+      default: false
     enable_mgmt:
       description:
       - Enable Management traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       type: bool
-      default: False
+      default: false
     enable_ft:
       description:
       - Enable Fault Tolerance traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       type: bool
-      default: False
+      default: false
     enable_provisioning:
       description:
       - Enable Provisioning traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       type: bool
-      default: False
+      default: false
     enable_replication:
       description:
       - Enable vSphere Replication traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       type: bool
-      default: False
+      default: false
     enable_replication_nfc:
       description:
       - Enable vSphere Replication NFC traffic on the VMKernel adapter.
       - This option is only allowed if the default TCP/IP stack is used.
       type: bool
-      default: False
+      default: false
     state:
       description:
       - If set to C(present), the VMKernel adapter will be created with the given specifications.
@@ -151,7 +151,7 @@ options:
       description:
       - Name of ESXi host to which VMKernel is to be managed.
       - "From version 2.5 onwards, this parameter is required."
-      required: True
+      required: true
       type: str
 extends_documentation_fragment:
 - community.vmware.vmware.documentation
@@ -172,7 +172,7 @@ EXAMPLES = r'''
         ip_address: 192.168.127.10
         subnet_mask: 255.255.255.0
       state: present
-      enable_mgmt: True
+      enable_mgmt: true
    delegate_to: localhost
 
 -  name: Add Management vmkernel port using DHCP network type
@@ -186,7 +186,7 @@ EXAMPLES = r'''
       state: present
       network:
         type: 'dhcp'
-      enable_mgmt: True
+      enable_mgmt: true
    delegate_to: localhost
 
 -  name: Change IP allocation from static to dhcp
@@ -201,7 +201,7 @@ EXAMPLES = r'''
       device: vmk1
       network:
         type: 'dhcp'
-      enable_mgmt: True
+      enable_mgmt: true
    delegate_to: localhost
 
 -  name: Delete VMkernel port
@@ -228,7 +228,7 @@ EXAMPLES = r'''
         ip_address: 192.168.127.10
         subnet_mask: 255.255.255.0
       state: present
-      enable_mgmt: True
+      enable_mgmt: true
    delegate_to: localhost
 
 -  name: Add vMotion vmkernel port with vMotion TCP/IP stack

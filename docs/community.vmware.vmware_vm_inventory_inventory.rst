@@ -485,7 +485,7 @@ Parameters
                         <div>In addition to VM properties, the following are special values</div>
                         <div>Use <code>customValue</code> to populate virtual machine&#x27;s custom attributes. <code>customValue</code> is only supported by vCenter and not by ESXi.</div>
                         <div>Use <code>all</code> to populate all the properties of the virtual machine. The value <code>all</code> is time consuming operation, do not use unless required absolutely.</div>
-                        <div>Please refer more VMware guest attributes which can be used as properties <a href='https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/scenario_guides/vmware_scenarios/vmware_inventory_vm_attributes.rst'>https://github.com/ansible/ansible/blob/devel/docs/docsite/rst/scenario_guides/vmware_scenarios/vmware_inventory_vm_attributes.rst</a></div>
+                        <div>Please refer more VMware guest attributes which can be used as properties <a href='https://docs.ansible.com/ansible/latest/collections/community/vmware/docsite/vmware_scenarios/vmware_inventory_vm_attributes.html'>https://docs.ansible.com/ansible/latest/collections/community/vmware/docsite/vmware_scenarios/vmware_inventory_vm_attributes.html</a></div>
                 </td>
             </tr>
             <tr>
@@ -659,7 +659,7 @@ Parameters
                     </td>
                 <td>
                         <div>This option transform flatten properties name to nested dictionary.</div>
-                        <div>From 1.10.0 and onwards, default value is set to <code>True</code>.</div>
+                        <div>From 1.10.0 and onwards, default value is set to <code>true</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -743,20 +743,20 @@ Examples
 
     # Sample configuration file for VMware Guest dynamic inventory
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
-        with_tags: True
+        validate_certs: false
+        with_tags: true
 
     # Gather minimum set of properties for VMware guest
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         properties:
         - 'name'
         - 'guest.ipAddress'
@@ -765,11 +765,11 @@ Examples
 
     # Create Groups based upon VMware Tools status
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         properties:
         - 'name'
         - 'config.name'
@@ -785,11 +785,11 @@ Examples
 
     # Filter VMs based upon condition
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         properties:
         - 'runtime.powerState'
         - 'config.name'
@@ -800,11 +800,11 @@ Examples
 
     # Filter VM's based on OR conditions
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         properties:
         - 'name'
         - 'config.name'
@@ -820,11 +820,11 @@ Examples
 
     # Filter VM's based on regex conditions
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         properties:
         - 'config.name'
         - 'config.guestId'
@@ -835,11 +835,11 @@ Examples
 
     # Using compose and groups
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         properties:
         - 'name'
         - 'config.name'
@@ -853,18 +853,18 @@ Examples
           ansible_user: "'admin'"
           ansible_connection: "'ssh'"
         groups:
-          VMs: True
+          VMs: true
         hostnames:
         - config.name
 
     # Use Datacenter, Cluster and Folder value to list VMs
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.200.241
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
-        with_tags: True
+        validate_certs: false
+        with_tags: true
         resources:
           - datacenter:
             - Asia-Datacenter1
@@ -881,11 +881,11 @@ Examples
 
     # Use Category and it's relation with Tag
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.201.128
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         hostnames:
         - 'config.name'
         properties:
@@ -893,22 +893,22 @@ Examples
         - 'config.guestId'
         - 'guest.ipAddress'
         - 'summary.runtime.powerState'
-        with_tags: True
+        with_tags: true
         keyed_groups:
         - key: tag_category.OS
           prefix: "vmware_tag_os_category_"
           separator: ""
-        with_nested_properties: True
+        with_nested_properties: true
         filters:
         - "tag_category.OS is defined and 'Linux' in tag_category.OS"
 
     # customizing hostnames based on VM's FQDN. The second hostnames template acts as a fallback mechanism.
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         hostnames:
          - 'config.name+"."+guest.ipStack.0.dnsConfig.domainName'
          - 'config.name'
@@ -922,11 +922,11 @@ Examples
 
     # Select a specific IP address for use by ansible when multiple NICs are present on the VM
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.223.31
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         compose:
           # Set the IP address used by ansible to one that starts by 10.42. or 10.43.
           ansible_host: >-
@@ -942,11 +942,11 @@ Examples
 
     # Group hosts using Jinja2 conditionals
         plugin: community.vmware.vmware_vm_inventory
-        strict: False
+        strict: false
         hostname: 10.65.13.37
         username: administrator@vsphere.local
         password: Esxi@123$%
-        validate_certs: False
+        validate_certs: false
         hostnames:
         - config.name
         properties:

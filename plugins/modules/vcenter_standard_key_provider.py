@@ -24,7 +24,7 @@ options:
   name:
     description: Name of the Key Provider to be added, reconfigured or removed from vCenter.
     type: str
-    required: True
+    required: true
   mark_default:
     description:
       - Set specified Key Provider with name C(name) as the default Key Provider.
@@ -118,7 +118,7 @@ EXAMPLES = r'''
     password: "{{ vcenter_password }}"
     name: 'test_standard_kp'
     state: 'present'
-    mark_default: True
+    mark_default: true
     kms_info:
       - kms_name: test_kms_1
         kms_ip: 192.168.1.10
@@ -136,7 +136,7 @@ EXAMPLES = r'''
     state: 'present'
     kms_info:
       - kms_name: test_kms_1
-        remove_kms: True
+        remove_kms: true
   register: remove_kms_result
 
 - name: Remove the Standard Key Provider

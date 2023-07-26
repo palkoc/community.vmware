@@ -48,8 +48,8 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, the DRS rule will be an Affinity rule.</div>
-                        <div>If set to <code>False</code>, the DRS rule will be an Anti-Affinity rule.</div>
+                        <div>If set to <code>true</code>, the DRS rule will be an Affinity rule.</div>
+                        <div>If set to <code>false</code>, the DRS rule will be an Anti-Affinity rule.</div>
                         <div>Effective only if <code>state</code> is set to <code>present</code>.</div>
                 </td>
             </tr>
@@ -117,7 +117,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, the DRS rule will be enabled.</div>
+                        <div>If set to <code>true</code>, the DRS rule will be enabled.</div>
                         <div>Effective only if <code>state</code> is set to <code>present</code>.</div>
                 </td>
             </tr>
@@ -170,7 +170,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, the DRS rule will be mandatory.</div>
+                        <div>If set to <code>true</code>, the DRS rule will be mandatory.</div>
                         <div>Effective only if <code>state</code> is set to <code>present</code>.</div>
                 </td>
             </tr>
@@ -347,9 +347,9 @@ Examples
         drs_rule_name: drs_rule_host_aff_0001
         host_group_name: DC0_C0_HOST_GR1
         vm_group_name: DC0_C0_VM_GR1
-        mandatory: True
-        enabled: True
-        affinity_rule: True
+        mandatory: true
+        enabled: true
+        affinity_rule: true
 
 
 

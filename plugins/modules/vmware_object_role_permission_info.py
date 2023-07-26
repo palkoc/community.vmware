@@ -21,7 +21,7 @@ description: This module can be used to gather object permissions on the given V
 author:
 - Abhijeet Kasurde (@Akasurde)
 notes:
-    - The ESXi login user must have the appropriate rights to administer permissions.
+    - The ESXi or vCenter login user must have the appropriate rights to administer permissions.
     - Supports check mode.
 options:
   principal:
@@ -29,7 +29,7 @@ options:
     - The optional name of an entity, such as a user, assigned permissions on an object.
     - If provided, actual permissions on the specified object are returned for the principal, instead of roles.
     type: str
-    required: False
+    required: false
   object_name:
     description:
     - The object name to assigned permission.

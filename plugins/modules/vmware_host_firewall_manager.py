@@ -88,9 +88,9 @@ EXAMPLES = r'''
     cluster_name: cluster_name
     rules:
         - name: vvold
-          enabled: True
+          enabled: true
           allowed_hosts:
-            all_ip: True
+            all_ip: true
   delegate_to: localhost
 
 - name: Enable vvold rule set for an ESXi Host
@@ -101,9 +101,9 @@ EXAMPLES = r'''
     esxi_hostname: '{{ esxi_hostname }}'
     rules:
         - name: vvold
-          enabled: True
+          enabled: true
           allowed_hosts:
-            all_ip: True
+            all_ip: true
   delegate_to: localhost
 
 - name: Manage multiple rule set for an ESXi Host
@@ -114,11 +114,11 @@ EXAMPLES = r'''
     esxi_hostname: '{{ esxi_hostname }}'
     rules:
         - name: vvold
-          enabled: True
+          enabled: true
           allowed_hosts:
-            all_ip: True
+            all_ip: true
         - name: CIMHttpServer
-          enabled: False
+          enabled: false
   delegate_to: localhost
 
 - name: Manage IP and network based firewall permissions for ESXi
@@ -129,22 +129,22 @@ EXAMPLES = r'''
     esxi_hostname: '{{ esxi_hostname }}'
     rules:
         - name: gdbserver
-          enabled: True
+          enabled: true
           allowed_hosts:
-            all_ip: False
+            all_ip: false
             ip_address:
               - 192.168.20.10
               - 192.168.20.11
         - name: CIMHttpServer
-          enabled: True
+          enabled: true
           allowed_hosts:
-            all_ip: False
+            all_ip: false
             ip_network:
               - 192.168.100.0/24
         - name: remoteSerialPort
-          enabled: True
+          enabled: true
           allowed_hosts:
-            all_ip: False
+            all_ip: false
             ip_address:
               - 192.168.100.11
             ip_network:
@@ -162,13 +162,13 @@ rule_set_state:
                 "rule_set_state": {
                     "localhost.localdomain": {
                         "CIMHttpServer": {
-                            "current_state": False,
-                            "desired_state": False,
-                            "previous_state": True,
+                            "current_state": false,
+                            "desired_state": false,
+                            "previous_state": true,
                             "allowed_hosts": {
-                                "current_allowed_all": True,
-                                "previous_allowed_all": True,
-                                "desired_allowed_all": True,
+                                "current_allowed_all": true,
+                                "previous_allowed_all": true,
+                                "desired_allowed_all": true,
                                 "current_allowed_ip": [],
                                 "previous_allowed_ip": [],
                                 "desired_allowed_ip": [],
@@ -178,13 +178,13 @@ rule_set_state:
                             }
                         },
                         "remoteSerialPort": {
-                            "current_state": True,
-                            "desired_state": True,
-                            "previous_state": True,
+                            "current_state": true,
+                            "desired_state": true,
+                            "previous_state": true,
                             "allowed_hosts": {
-                                "current_allowed_all": False,
-                                "previous_allowed_all": True,
-                                "desired_allowed_all": False,
+                                "current_allowed_all": false,
+                                "previous_allowed_all": true,
+                                "desired_allowed_all": false,
                                 "current_allowed_ip": ["192.168.100.11"],
                                 "previous_allowed_ip": [],
                                 "desired_allowed_ip": ["192.168.100.11"],

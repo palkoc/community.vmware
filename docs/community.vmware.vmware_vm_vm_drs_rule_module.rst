@@ -48,8 +48,8 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, the DRS rule will be an Affinity rule.</div>
-                        <div>If set to <code>False</code>, the DRS rule will be an Anti-Affinity rule.</div>
+                        <div>If set to <code>true</code>, the DRS rule will be an Affinity rule.</div>
+                        <div>If set to <code>false</code>, the DRS rule will be an Anti-Affinity rule.</div>
                         <div>Effective only if <code>state</code> is set to <code>present</code>.</div>
                 </td>
             </tr>
@@ -101,7 +101,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, the DRS rule will be enabled.</div>
+                        <div>If set to <code>true</code>, the DRS rule will be enabled.</div>
                         <div>Effective only if <code>state</code> is set to <code>present</code>.</div>
                 </td>
             </tr>
@@ -138,7 +138,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>If set to <code>True</code>, the DRS rule will be mandatory.</div>
+                        <div>If set to <code>true</code>, the DRS rule will be mandatory.</div>
                         <div>Effective only if <code>state</code> is set to <code>present</code>.</div>
                 </td>
             </tr>
@@ -317,9 +317,9 @@ Examples
             - vm1
             - vm2
         drs_rule_name: vm1-vm2-affinity-rule-001
-        enabled: True
-        mandatory: True
-        affinity_rule: True
+        enabled: true
+        mandatory: true
+        affinity_rule: true
       delegate_to: localhost
 
     - name: Create DRS Anti-Affinity Rule for VM-VM
@@ -328,13 +328,13 @@ Examples
         username: "{{ esxi_username }}"
         password: "{{ esxi_password }}"
         cluster_name: "{{ cluster_name }}"
-        enabled: True
+        enabled: true
         vms:
             - vm1
             - vm2
         drs_rule_name: vm1-vm2-affinity-rule-001
-        mandatory: True
-        affinity_rule: False
+        mandatory: true
+        affinity_rule: false
       delegate_to: localhost
 
     - name: Delete DRS Affinity Rule for VM-VM

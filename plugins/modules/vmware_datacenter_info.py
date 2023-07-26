@@ -47,8 +47,8 @@ options:
       elements: str
     show_tag:
       description:
-      - Tags related to Datacenter are shown if set to C(True).
-      default: False
+      - Tags related to Datacenter are shown if set to C(true).
+      default: false
       type: bool
 extends_documentation_fragment:
 - community.vmware.vmware.documentation
@@ -76,7 +76,7 @@ EXAMPLES = r'''
     username: '{{ vcenter_username }}'
     password: '{{ vcenter_password }}'
     datacenter: '{{ datacenter_name }}'
-    show_tag: True
+    show_tag: true
   delegate_to: localhost
 
 - name: Gather vSphere schema information

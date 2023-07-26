@@ -213,7 +213,7 @@ Parameters
                         </ul>
                 </td>
                 <td>
-                        <div>Tags related to cluster are shown if set to <code>True</code>.</div>
+                        <div>Tags related to cluster are shown if set to <code>true</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -297,7 +297,7 @@ Examples
         username: '{{ vcenter_username }}'
         password: '{{ vcenter_password }}'
         cluster_name: DC0_C0
-        show_tag: True
+        show_tag: true
       delegate_to: localhost
       register: cluster_info
 

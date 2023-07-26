@@ -154,8 +154,8 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The guest OS ID from the returned list when <code>get_guest_os_ids</code> is set to <code>True</code>, e.g., &#x27;rhel8_64Guest&#x27;.</div>
-                        <div>This parameter must be set when <code>get_config_options</code> is set to <code>True</code>.</div>
+                        <div>The guest OS ID from the returned list when <code>get_guest_os_ids</code> is set to <code>true</code>, e.g., &#x27;rhel8_64Guest&#x27;.</div>
+                        <div>This parameter must be set when <code>get_config_options</code> is set to <code>true</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -170,7 +170,7 @@ Parameters
                 <td>
                 </td>
                 <td>
-                        <div>The hardware version from the returned list when <code>get_hardware_versions</code> is set to <code>True</code>, e.g., &#x27;vmx-19&#x27;.</div>
+                        <div>The hardware version from the returned list when <code>get_hardware_versions</code> is set to <code>true</code>, e.g., &#x27;vmx-19&#x27;.</div>
                 </td>
             </tr>
             <tr>
@@ -324,7 +324,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         esxi_hostname: "{{ esxi_hostname }}"
-        get_guest_os_ids: True
+        get_guest_os_ids: true
       delegate_to: localhost
 
     - name: Get VM recommended config option for Windows 10 guest OS on given ESXi host
@@ -333,7 +333,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         esxi_hostname: "{{ esxi_hostname }}"
-        get_config_options: True
+        get_config_options: true
         guest_id: "windows9_64Guest"
       delegate_to: localhost
 

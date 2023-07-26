@@ -131,8 +131,8 @@ Parameters
                 </td>
                 <td>
                         <div>This value allows for the sharing of an RDM between two machines.</div>
-                        <div>The primary machine holding the RDM uses the default <code>False</code>.</div>
-                        <div>The secondary machine holding the RDM uses <code>True</code>.</div>
+                        <div>The primary machine holding the RDM uses the default <code>false</code>.</div>
+                        <div>The secondary machine holding the RDM uses <code>true</code>.</div>
                 </td>
             </tr>
             <tr>
@@ -932,7 +932,7 @@ Examples
           - size_gb: 10
             type: eagerzeroedthick
             state: present
-            autoselect_datastore: True
+            autoselect_datastore: true
             scsi_controller: 2
             scsi_type: 'buslogic'
             unit_number: 12
@@ -940,7 +940,7 @@ Examples
           - size: 10Gb
             type: eagerzeroedthick
             state: present
-            autoselect_datastore: True
+            autoselect_datastore: true
             scsi_controller: 2
             scsi_type: 'buslogic'
             unit_number: 1
@@ -975,7 +975,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         datacenter: "{{ datacenter_name }}"
-        validate_certs: no
+        validate_certs: false
         name: "Test_VM"
         disk:
           - type: rdm
@@ -991,7 +991,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         datacenter: "{{ datacenter_name }}"
-        validate_certs: no
+        validate_certs: false
         name: "Test_VM"
         disk:
           - type: rdm
@@ -1008,7 +1008,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         datacenter: "{{ datacenter_name }}"
-        validate_certs: no
+        validate_certs: false
         name: "Test_VM"
         disk:
           - type: rdm
@@ -1026,7 +1026,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         datacenter: "{{ datacenter_name }}"
-        validate_certs: no
+        validate_certs: false
         name: "Test_VM"
         disk:
           - type: rdm
@@ -1099,7 +1099,7 @@ Examples
           - state: absent
             scsi_controller: 1
             unit_number: 2
-            destroy: no
+            destroy: false
       delegate_to: localhost
       register: disk_facts
 
@@ -1109,7 +1109,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         datacenter: "{{ datacenter_name }}"
-        validate_certs: no
+        validate_certs: false
         uuid: 421e4592-c069-924d-ce20-7e7533fab926
         disk:
           - size_mb: 256
@@ -1122,7 +1122,7 @@ Examples
             disk_mode: 'persistent'
           - size_gb: 1
             state: present
-            autoselect_datastore: True
+            autoselect_datastore: true
             controller_type: nvme
             controller_number: 2
             unit_number: 3
@@ -1136,7 +1136,7 @@ Examples
         username: "{{ vcenter_username }}"
         password: "{{ vcenter_password }}"
         datacenter: "{{ datacenter_name }}"
-        validate_certs: no
+        validate_certs: false
         name: VM_226
         disk:
           - type: vpmemdisk

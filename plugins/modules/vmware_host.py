@@ -51,9 +51,9 @@ options:
     type: str
   add_connected:
     description:
-    - If set to C(True), then the host should be connected as soon as it is added.
+    - If set to C(true), then the host should be connected as soon as it is added.
     - This parameter is ignored if state is set to a value other than C(present).
-    default: True
+    default: true
     type: bool
   esxi_hostname:
     description:
@@ -107,18 +107,18 @@ options:
     - Optional for reconnect, but only used if C(esxi_username) and C(esxi_password) are used.
     - Unused for removing.
     type: bool
-    default: True
+    default: true
   force_connection:
     description:
     - Force the connection if the host is already being managed by another vCenter server.
     type: bool
-    default: True
+    default: true
   reconnect_disconnected:
     description:
     - Reconnect disconnected hosts.
     - This is only used if C(state) is set to C(present) and if the host already exists.
     type: bool
-    default: True
+    default: true
 extends_documentation_fragment:
 - community.vmware.vmware.documentation
 
@@ -149,7 +149,7 @@ EXAMPLES = r'''
     esxi_username: '{{ esxi_username }}'
     esxi_password: '{{ esxi_password }}'
     state: present
-    add_connected: True
+    add_connected: true
   delegate_to: localhost
 
 - name: Reconnect ESXi Host (with username/password set)

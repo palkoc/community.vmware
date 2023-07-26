@@ -27,20 +27,20 @@ options:
     switch:
         description:
             - vSwitch to modify.
-        required: True
+        required: true
         aliases: [ 'switch_name', 'vswitch' ]
         type: str
     portgroup:
         description:
             - Portgroup name to add.
-        required: True
+        required: true
         aliases: [ 'portgroup_name' ]
         type: str
     vlan_id:
         description:
             - VLAN ID to assign to portgroup.
             - Set to 0 (no VLAN tagging) by default.
-        required: False
+        required: false
         default: 0
         aliases: [ 'vlan' ]
         type: int
@@ -60,7 +60,7 @@ options:
             mac_changes:
                 type: bool
                 description: Indicates whether mac changes are allowed.
-        required: False
+        required: false
         aliases: [ 'security_policy', 'network_policy' ]
         type: dict
     teaming:
@@ -71,7 +71,7 @@ options:
                 type: str
                 description:
                 - Network adapter teaming policy.
-                choices: [ loadbalance_ip, loadbalance_srcmac, loadbalance_srcid, failover_explicit, None ]
+                choices: [ loadbalance_ip, loadbalance_srcmac, loadbalance_srcid, failover_explicit ]
                 aliases: [ 'load_balance_policy' ]
             network_failure_detection:
                 type: str
@@ -95,7 +95,7 @@ options:
                 - List of standby adapters used for failover.
                 - All vmnics are used as active adapters if C(active_adapters) and C(standby_adapters) are not defined.
                 elements: str
-        required: False
+        required: false
         aliases: [ 'teaming_policy' ]
         type: dict
     traffic_shaping:
@@ -114,7 +114,7 @@ options:
             burst_size:
                 type: int
                 description: Burst size (KB).
-        required: False
+        required: false
         type: dict
     cluster_name:
         description:
@@ -162,7 +162,7 @@ EXAMPLES = r'''
     switch: "{{ vswitch_name }}"
     portgroup: "{{ portgroup_name }}"
     security:
-        promiscuous_mode: True
+        promiscuous_mode: true
   delegate_to: localhost
 
 - name: Add Management Network VM Portgroup to specific hosts
@@ -209,11 +209,11 @@ EXAMPLES = r'''
     portgroup: "{{ portgroup_name }}"
     vlan_id: 10
     security:
-        promiscuous_mode: False
-        mac_changes: False
-        forged_transmits: False
+        promiscuous_mode: false
+        mac_changes: false
+        forged_transmits: false
     traffic_shaping:
-        enabled: True
+        enabled: true
         average_bandwidth: 100000
         peak_bandwidth: 100000
         burst_size: 102400
@@ -1003,7 +1003,6 @@ def main():
                 load_balancing=dict(
                     type='str',
                     choices=[
-                        None,
                         'loadbalance_ip',
                         'loadbalance_srcmac',
                         'loadbalance_srcid',

@@ -26,7 +26,7 @@ options:
       - The I(search_string) is a string to be specified searching.
       - Specify the domain user or group name to be searched.
     type: str
-    required: True
+    required: true
   belongs_to_group:
     description:
       -  If a group existing, returned contains only users or groups that directly belong to the specified group.
@@ -37,19 +37,19 @@ options:
     type: str
   exact_match:
     description:
-      - If I(exact_match) is C(True), it indicates the I(search_string) passed should match a user or group name exactly.
+      - If I(exact_match) is C(true), it indicates the I(search_string) passed should match a user or group name exactly.
     type: bool
-    default: False
+    default: false
   find_users:
     description:
-      - If I(find_users) is C(True), domain users will be included in the result.
+      - If I(find_users) is C(true), domain users will be included in the result.
     type: bool
-    default: True
+    default: true
   find_groups:
     description:
-      - If I(find_groups) is C(True), domain groups will be included in the result.
+      - If I(find_groups) is C(true), domain groups will be included in the result.
     type: bool
-    default: True
+    default: true
 extends_documentation_fragment:
   - community.vmware.vmware.documentation
 '''

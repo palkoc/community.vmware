@@ -56,7 +56,7 @@ options:
    datacenter:
      description:
      - The datacenter name to which virtual machine belongs to.
-     required: True
+     required: true
      type: str
    use_instance_uuid:
      description:
@@ -112,10 +112,10 @@ options:
        cluster_disk:
          description:
            - This value allows for the sharing of an RDM between two machines.
-           - The primary machine holding the RDM uses the default C(False).
-           - The secondary machine holding the RDM uses C(True).
+           - The primary machine holding the RDM uses the default C(false).
+           - The secondary machine holding the RDM uses C(true).
          type: bool
-         default: False
+         default: false
        compatibility_mode:
          description: Compatibility mode for raw devices. Required when disk type C(type) is set to C(rdm).
          type: str
@@ -126,7 +126,7 @@ options:
            - Setting sharing means that multiple virtual machines can write to the virtual disk.
            - Sharing can only be set if C(type) is set to C(eagerzeroedthick) or C(rdm).
          type: bool
-         default: False
+         default: false
        datastore:
          description:
            - Name of datastore or datastore cluster to be used for the disk.
@@ -159,7 +159,7 @@ options:
            - Valid value range from 0 to 14 for NVME controller.
            - Valid value range from 0 to 1 for IDE controller.
          type: int
-         required: True
+         required: true
        scsi_type:
          description:
            - Type of SCSI controller. This value is required only for the first occurrence of SCSI Controller.
@@ -169,7 +169,7 @@ options:
        destroy:
          description: If C(state) is C(absent), make sure the disk file is deleted from the datastore. Added in version 2.10.
          type: bool
-         default: True
+         default: true
        filename:
          description:
            - Existing disk image to be used. Filename must already exist on the datastore.
@@ -257,7 +257,7 @@ EXAMPLES = r'''
       - size_gb: 10
         type: eagerzeroedthick
         state: present
-        autoselect_datastore: True
+        autoselect_datastore: true
         scsi_controller: 2
         scsi_type: 'buslogic'
         unit_number: 12
@@ -265,7 +265,7 @@ EXAMPLES = r'''
       - size: 10Gb
         type: eagerzeroedthick
         state: present
-        autoselect_datastore: True
+        autoselect_datastore: true
         scsi_controller: 2
         scsi_type: 'buslogic'
         unit_number: 1
@@ -300,7 +300,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     datacenter: "{{ datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     name: "Test_VM"
     disk:
       - type: rdm
@@ -316,7 +316,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     datacenter: "{{ datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     name: "Test_VM"
     disk:
       - type: rdm
@@ -333,7 +333,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     datacenter: "{{ datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     name: "Test_VM"
     disk:
       - type: rdm
@@ -351,7 +351,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     datacenter: "{{ datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     name: "Test_VM"
     disk:
       - type: rdm
@@ -424,7 +424,7 @@ EXAMPLES = r'''
       - state: absent
         scsi_controller: 1
         unit_number: 2
-        destroy: no
+        destroy: false
   delegate_to: localhost
   register: disk_facts
 
@@ -434,7 +434,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     datacenter: "{{ datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     uuid: 421e4592-c069-924d-ce20-7e7533fab926
     disk:
       - size_mb: 256
@@ -447,7 +447,7 @@ EXAMPLES = r'''
         disk_mode: 'persistent'
       - size_gb: 1
         state: present
-        autoselect_datastore: True
+        autoselect_datastore: true
         controller_type: nvme
         controller_number: 2
         unit_number: 3
@@ -461,7 +461,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     datacenter: "{{ datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     name: VM_226
     disk:
       - type: vpmemdisk
@@ -810,10 +810,6 @@ class PyVmomiHelper(PyVmomi):
                         disk_change_list.append(disk_change)
                         results['disk_changes'][disk['disk_index']] = "Disk created."
                         break
-                    if not disk_found and disk['state'] == 'absent':
-                        self.module.fail_json(msg="Not found disk with 'controller_type': '%s',"
-                                                  " 'controller_number': '%s', 'unit_number': '%s' to remove."
-                                                  % (disk['controller_type'], disk['controller_number'], disk['disk_unit_number']))
             if disk_change:
                 # Adding multiple disks in a single attempt raises weird errors
                 # So adding single disk at a time.

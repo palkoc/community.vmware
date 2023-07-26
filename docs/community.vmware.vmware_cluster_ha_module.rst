@@ -215,7 +215,7 @@ Parameters
                         <div>Whether HA restarts virtual machines after a host fails.</div>
                         <div>If set to <code>enabled</code>, HA restarts virtual machines after a host fails.</div>
                         <div>If set to <code>disabled</code>, HA does not restart virtual machines after a host fails.</div>
-                        <div>If <code>enable</code> is set to <code>False</code>, then this value is ignored.</div>
+                        <div>If <code>enable</code> is set to <code>false</code>, then this value is ignored.</div>
                 </td>
             </tr>
             <tr>
@@ -337,7 +337,7 @@ Parameters
                         <div>If set to <code>vmAndAppMonitoring</code>, HA response to both virtual machine and application heartbeat failure.</div>
                         <div>If set to <code>vmMonitoringDisabled</code>, virtual machine health monitoring is disabled.</div>
                         <div>If set to <code>vmMonitoringOnly</code>, HA response to virtual machine heartbeat failure.</div>
-                        <div>If <code>enable</code> is set to <code>False</code>, then this value is ignored.</div>
+                        <div>If <code>enable</code> is set to <code>false</code>, then this value is ignored.</div>
                 </td>
             </tr>
             <tr>
@@ -666,7 +666,7 @@ Examples
         password: "{{ vcenter_password }}"
         datacenter_name: DC0
         cluster_name: "{{ cluster_name }}"
-        enable: True
+        enable: true
         ha_vm_monitoring: vmMonitoringOnly
       delegate_to: localhost
 
@@ -679,7 +679,7 @@ Examples
         cluster_name: cluster
         enable: true
         reservation_based_admission_control:
-          auto_compute_percentages: False
+          auto_compute_percentages: false
           failover_level: 1
           cpu_failover_resources_percent: 50
           memory_failover_resources_percent: 50

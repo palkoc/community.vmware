@@ -28,7 +28,7 @@ options:
         type: str
     fetch_from_cache:
         description:
-            - C(True) to return the result from cache directly instead of running the full health check.
+            - C(true) to return the result from cache directly instead of running the full health check.
         required: false
         default: false
         type: bool
@@ -47,7 +47,7 @@ EXAMPLES = r'''
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
     cluster_name: 'vSAN01'
-    fetch_from_cache: False
+    fetch_from_cache: false
 
 - name: Gather health info from a vSAN's cluster with datacenter
   community.vmware.vmware_vsan_health_info:
@@ -56,7 +56,7 @@ EXAMPLES = r'''
     password: "{{ vcenter_password }}"
     cluster_name: 'vSAN01'
     datacenter: 'Datacenter_01'
-    fetch_from_cache: True
+    fetch_from_cache: true
 '''
 
 RETURN = r'''
@@ -167,7 +167,7 @@ class VSANInfoManager(PyVmomi):
 
         health = json.dumps(cluster_health, cls=VmomiSupport.VmomiJSONEncoder, sort_keys=True, strip_dynamic=True)
 
-        self.module.exit_json(changed=False, vsan_health_info=health)
+        self.module.exit_json(changed=False, vsan_health_info=json.loads(health))
 
 
 def main():

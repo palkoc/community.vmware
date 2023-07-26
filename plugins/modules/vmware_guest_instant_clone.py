@@ -32,7 +32,7 @@ options:
       - Name of the Cloned virtual machine.
     type: str
     aliases: ['vm_name']
-    required: True
+    required: true
   parent_vm:
     description:
       - Name of the parent virtual machine.
@@ -60,18 +60,18 @@ options:
       - Required with I(resource_pool) to find resource pool details. This will be used as additional information when there are resource pools with same name.
     type: str
     aliases: ['esxi_hostname']
-    required: True
+    required: true
   datastore:
     description:
       - The name of the datastore or the datastore cluster.
       - If datastore cluster name is specified, module will find the Storage DRS recommended datastore in that cluster.
     type: str
-    required: True
+    required: true
   datacenter:
     description:
       - Name of the datacenter, where VM to be deployed.
     type: str
-    required: True
+    required: true
   folder:
     description:
       - Destination folder, absolute path to deploy the cloned vm.
@@ -87,18 +87,18 @@ options:
       - For default or non-unique resource pool names, specify I(host) and I(cluster).
       - C(Resources) is the default name of resource pool.
     type: str
-    required: False
+    required: false
   vm_username:
     description:
       - The user to login-in to the virtual machine.
       - Only required when using guest customization feature.
-    required: False
+    required: false
     type: str
   vm_password:
     description:
       - The password used to login-in to the virtual machine.
       - Only required when using guest customization feature.
-    required: False
+    required: false
     type: str
   guestinfo_vars:
     description:
@@ -136,7 +136,7 @@ options:
     description:
       - Whether waiting until vm tools start after rebooting an instant clone vm.
     type: bool
-    default: True
+    default: true
   wait_vm_tools_timeout:
     description:
       - Define a timeout (in seconds) for I(the wait_vm_tools) parameter.
@@ -156,7 +156,7 @@ EXAMPLES = r'''
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
-    validate_certs: False
+    validate_certs: false
     folder: "{{ f0 }}"
     datastore: "{{ rw_datastore }}"
     datacenter: "{{ dc1 }}"
@@ -199,7 +199,7 @@ EXAMPLES = r'''
     password: "{{ vcenter_password }}"
     vm_username: "root"
     vm_password: "SuperSecret"
-    validate_certs: False
+    validate_certs: false
     folder: "{{ f0 }}"
     datastore: "{{ rw_datastore }}"
     datacenter: "{{ dc1 }}"
@@ -222,7 +222,7 @@ EXAMPLES = r'''
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
-    validate_certs: False
+    validate_certs: false
     name: "{{ Clone_vm }}"
     parent_vm: "{{ testvm_1 }}"
     datacenter: "{{ dc1 }}"
@@ -236,7 +236,7 @@ EXAMPLES = r'''
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
-    validate_certs: False
+    validate_certs: false
     folder: "{{ f0 }}"
     datastore: "{{ rw_datastore }}"
     datacenter: "{{ dc1 }}"

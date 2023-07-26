@@ -49,7 +49,7 @@ options:
     description:
     - ReadOnly or ReadWrite mount.
     - Unused if datastore type is not set to C(nfs)/C(nfs41) and state is not set to C(present).
-    default: False
+    default: false
     type: bool
   vmfs_device_name:
     description:
@@ -73,7 +73,7 @@ options:
     - This parameter can't be extend using another datastore.
     - A use case example in I(auto_expand), it can be used to expand a datastore capacity after increasing LUN volume.
     type: bool
-    default: True
+    default: true
   state:
     description:
     - "present: Mount datastore on host if datastore is absent else do nothing."
@@ -109,7 +109,7 @@ EXAMPLES = r'''
       datastore_type: '{{ item.type }}'
       nfs_server: '{{ item.server }}'
       nfs_path: '{{ item.path }}'
-      nfs_ro: no
+      nfs_ro: false
       esxi_hostname: '{{ inventory_hostname }}'
       state: present
   delegate_to: localhost
@@ -126,7 +126,7 @@ EXAMPLES = r'''
       datastore_type: '{{ item.type }}'
       nfs_server: '{{ item.server }}'
       nfs_path: '{{ item.path }}'
-      nfs_ro: no
+      nfs_ro: false
       esxi_hostname: '{{ inventory_hostname }}'
       state: present
   delegate_to: localhost
